@@ -35,6 +35,7 @@ export const register = async (req, res) => {
 
 		const {passwordHash, ...userData} = user._doc;
 
+		console.log(token);
 		res.json({
 			... userData,
 			token
@@ -63,7 +64,7 @@ export const login = async (req, res) => {
 
 		if (!isValidPass) {
 			return res.status(400).json({
-				message: 'Password or login is not corrects'
+					message: 'Password or login is not corrects'
 			})
 		}
 
