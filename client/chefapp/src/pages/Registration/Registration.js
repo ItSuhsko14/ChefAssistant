@@ -1,21 +1,18 @@
 import * as React from 'react';
-import {useState, useEffect} from 'react'
+import { useDispatch } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {registration} from '../../action/user.js'
-
-
+import { useForm } from 'react-hook-form';
+import { Navigate } from 'react-router-dom';
+import { fetchRegister } from '../../redux/slices/register.js'
 
 
 
@@ -36,21 +33,34 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp () {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const userName = data.get('userName');
-    const email = data.get('email');
-    const password = data.get('password');
-    registration(userName, email, password);
-    console.log(userName, email, password);
-    /*const [userName, setUserName] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')  */
+  const dispatch = useDispatch();
+  const { register,
+          handleSubmit,
+          formState: {errors}
+        } = useForm({
+          defaultValues: {
+            userName: 'a888',
+            email: 'a888@gmail.com',
+            password: '888888'
+          },
+          mode: 'all'
+        })
+
+const onSubmit = async (values) => {
+  const data = await dispatch(fetchRegister(values));
+
+  if (!data.payload) {
+    return alert('cant register')
   }
+  if ('token' in data.payload) {
+    window.localStorage.setItem('token', data.payload.token)
+  } else { console.log('cant register'); }
+}
+
+if (window.localStorage.token) {
+  return <Navigate to='/' />
+}
   
-
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -70,7 +80,7 @@ export default function SignUp () {
           <Typography component="h1" variant="h5">
             Registration
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -79,6 +89,9 @@ export default function SignUp () {
               label="User name"
               name="userName"
               autoComplete="userName"
+              error={Boolean(errors.userName?.message)}
+              helperText={errors.userName?.message}
+              {...register('userName', {required: 'input userName'})}
               autoFocus
             />
             <TextField
@@ -90,6 +103,9 @@ export default function SignUp () {
               type="email"
               id="password"
               autoComplete="email"
+              error={Boolean(errors.email?.message)}
+              helperText={errors.email?.message}
+              {...register('email', {required: 'input email'})}
             />
             <TextField
               margin="normal"
@@ -100,6 +116,9 @@ export default function SignUp () {
               type="password"
               id="password"
               autoComplete="current-password"
+              error={Boolean(errors.password?.message)}
+              helperText={errors.password?.message}
+              {...register('password', {required: 'input password'})}
             />
             
             <Button

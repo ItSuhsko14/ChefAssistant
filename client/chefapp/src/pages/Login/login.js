@@ -1,6 +1,5 @@
 import * as React from 'react';
-
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,8 +10,8 @@ import LoginIcon from '@mui/icons-material/Login';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useForm } from 'react-hook-form'
-import { fetchAuth, selectIsAuth } from '../../redux/slices/auth.js'
+import { useForm } from 'react-hook-form';
+import { fetchAuth } from '../../redux/slices/auth.js'
 import { Navigate } from 'react-router-dom'
 
 function Copyright(props) {
@@ -31,19 +30,13 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login () {
-  const isAuth = useSelector(selectIsAuth)
-  window.localStorage.setItem('selectIsAuth', selectIsAuth)
-  console.log("Login selectIsAuth");
-  console.log(selectIsAuth);
-  console.log('Login: isAuth');
-  console.log(isAuth);
   const dispatch = useDispatch();
   const { register, 
           handleSubmit, 
           formState: { errors }
   } = useForm({
     defaultValues: {
-      userName: 'a777',
+      /*userName: 'a777',*/
       email: 'a777@gmail.com',
       password: '777777'
     },
@@ -52,16 +45,17 @@ export default function Login () {
 
   const onSubmit = async (values) => {
     const data = await dispatch(fetchAuth(values));
+
+    if (!data.payload) {
+      return alert('cant authorize')
+    }
     if ('token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token)
-      window.localStorage.setItem('selectIsAuth', selectIsAuth)
-      window.localStorage.setItem('auth', isAuth)
     } else { console.log('Cant autorize');
   }
   
   }
 
-  
 if (window.localStorage.token) {
   console.log("You are alredy authorize");
   return <Navigate to="/" replace='true' />
@@ -87,19 +81,7 @@ if (window.localStorage.token) {
           </Typography>
           
             <form onSubmit={handleSubmit(onSubmit)}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="userName"
-                label="User name"
-                name="userName"
-                autoComplete="userName"
-                autoFocus
-                error={Boolean(errors.userName?.message)}
-                helperText={errors.userName?.message}
-                {...register('userName', { required: 'Input user name' }) } 
-              />
+          
               <TextField
                 margin="normal"
                 required
@@ -113,6 +95,7 @@ if (window.localStorage.token) {
                 helperText={errors.email?.message}
                 {...register('email', {required: 'input email'}) }
               />
+          
               <TextField
                 margin="normal"
                 required
@@ -138,7 +121,7 @@ if (window.localStorage.token) {
             </form>
             
             <Typography align="right">
-              <Link href="registration" variant="body1">
+              <Link href="/registration" variant="body1">
                 {"I don't have an account? Sign Up"}
               </Link>
             </Typography>

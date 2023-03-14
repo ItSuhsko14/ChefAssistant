@@ -7,7 +7,7 @@ export const getAll = async (req, res) => {
 		console.log(cards);
 		res.json(cards);
 	} catch(err) {
-		console.log("Get all errorl: ");
+		console.log("Get all error: ");
 		console.log(err);
 		res.status(500).json({
 			message: "Can't find cards"
@@ -35,9 +35,11 @@ export const getOne = async (req, res) => {
 
 export const create = async (req, res) => {
 	try {
+		console.log("card controller create started");
 		const doc = new CardModel({
 			title: req.body.title,
 			text: req.body.text,
+			items: req.body.items,
 			user: req.userId,
 		});
 
@@ -92,6 +94,7 @@ export const update = async (req, res) => {
 			title: req.body.title,
 			text: req.body.text,
 			user: req.userId,
+			data: req.body.ingredients,
 		}
 		)
 

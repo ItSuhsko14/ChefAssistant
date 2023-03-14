@@ -12,6 +12,5 @@ export const registerValidation = [
 	]
 
 export const cardCreateValidation = [
-	body('title', 'Input title of dish').isString(),
-	body('text', 'Input text of card').isString(),
+	
 	]

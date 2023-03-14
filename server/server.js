@@ -33,7 +33,7 @@ app.get('/',  (req, res) => {
 
 });
 
-app.post('/auth/registr', registerValidation, handleValidationError, UserController.register)
+app.post('/auth/register', registerValidation, handleValidationError, UserController.register)
 app.post('/auth/login',  loginValidation, handleValidationError, UserController.login)
 app.get('/auth/me', checkAuth, UserController.getMe)
 

@@ -1,12 +1,15 @@
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from '../../axios.js'
 
-export const fetchCards = createAsyncThunk('cards/fetchCards', async () => {
-	const { data } = await axios.get('/cards')
+export const fetchCards = createAsyncThunk('/cards', async (params) => {
+	const { data } = await axios.post('/cards', params)
 	return data;
 })
 
-
+export const fetchRemoveCard = createAsyncThunk('cards/fetchRemoveCard', async(id) => {
+	axios.delete(`/cards/${id}`);
+})
 
 const initialState = {
 	cards: {
@@ -20,6 +23,7 @@ const cardsSlice = createSlice({
 	initialState,
 	reducer: {},
 	extraReducers: {
+		// додавання карток
 		[fetchCards.pending]: (state, action) => {
 			state.cards.items = [];
 			state.cards.status = 'loading';
@@ -31,7 +35,13 @@ const cardsSlice = createSlice({
 		[fetchCards.rejected]: (state) => {
 			state.cards.items = [];
 			state.cards.status = 'error';
-		}
+		},
+		// видалення карток
+		[fetchRemoveCard.pending]: (state, action) => {
+			state.cards.items = state.cards.items.filter(obj => obj._id === action.paylodad);
+	
+		},
+		
 	}
 })
 
