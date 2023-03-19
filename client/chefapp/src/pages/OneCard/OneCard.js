@@ -47,7 +47,7 @@ function OneCard() {
       console.log(card.items);
       return (
         <>
-          <Card name={card.title} text={card.text} items={card.items}  />
+          <Card name={card.title} text={card.text} items={card.items} cardId={card._id} />
         </>
       )
   }

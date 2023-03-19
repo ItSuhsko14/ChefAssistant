@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCards } from '../../redux/slices/cards.js';
-import Link from '@mui/material/Link';
+import { Outlet, Link } from "react-router-dom";
 
 import Button from '@mui/material/Button';
 
@@ -20,23 +20,21 @@ export const Home = () => {
 	  return (
  		<>
 	 		<h1>Welcome in Cheff assistant.</h1>
-	 		<p>See all cards - 
+	 		<p>See all cards 
 	 			<Button variant="contained">
-	 				<a href="/getAll">
+	 				<Link to="/getAll">
 	 					all cards
-	 				</a>
+	 				</Link>
 	 			</Button>
 	 		</p>
-	 		<p>Create new card - 
+	 		<p>Create new card 
 	 			<Button variant="contained">
-	 				<a href="/addCard">
+	 				<Link to="/addCard">
 	 					new card
-	 				</a>
+	 				</Link>
 	 			</Button>
 	 		</p>
-	 		<Button variant="text">Text</Button>
-			
-			<Button variant="outlined">Outlined</Button>
+	 		ul>li*3>span
 		</>    	
   		);
 }

@@ -10,14 +10,11 @@ export const Ingredient = (props) => {
 	return (
 		<>
 			<Grid container spacing={0} className={styles.ingredient}>
-			    <Grid xs={7}>
+			    <Grid xs={9}>
 			    	<div className={styles.name}> {props.name} </div>
 			    </Grid>
 			    <Grid xs={3}>
    		        	<div className={styles.amount} > {props.amount} </div>
-			    </Grid>
-			    
-	        	<Grid item xs={2} >	
 			    </Grid>
 		    </Grid>
 		</>
@@ -32,7 +29,7 @@ export const IngredientInput = (props) => {
 			    	<TextField label={props.label} variant="outlined" type="text" />
 			    </Grid>
 			    <Grid xs={3}>
-			    	<TextField label="amout" variant="outlined" type="number" />
+			    	<TextField label={props.label} variant="outlined" type="number" />
 			    </Grid>
 			    
 	        	<Grid item xs={2} 

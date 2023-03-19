@@ -4,11 +4,20 @@ import styles from './card.module.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import EditIcon from '@mui/icons-material/Edit';
-
+import ClearIcon from '@mui/icons-material/Clear';
+import { useDispatch } from 'react-redux';
+import { fetchRemoveCard } from '../../redux/slices/cards.js';
 
 function MyCard(props) {
   const items = props.items;
   console.log(items[0]);
+
+    const dispatch = useDispatch();
+    const cardId = props.cardId;
+    
+    const deleteCard = async () => {
+    dispatch(fetchRemoveCard(props.cardId));
+    }
 
   return (
     <>
@@ -20,6 +29,10 @@ function MyCard(props) {
             Edit card   
             <EditIcon />
           </Button>          
+          <Button variant="contained" onClick={deleteCard}> 
+            Delete card
+            <ClearIcon />
+          </Button>          
         </p>
         <Box className={styles.ingredientContainer}>
           {items.map( (item) => {
@@ -27,7 +40,7 @@ function MyCard(props) {
               <Ingredient name={item.name} amount={item.quantity} />
             )
           })}
-          <AddIngredient />
+          
         </ Box>
       </Box>
       

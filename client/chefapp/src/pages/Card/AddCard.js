@@ -77,7 +77,7 @@ function AddCard(props) {
               variant="outlined" 
               error={Boolean(errors.cardName?.message)}
               helperText={errors.cardName?.message}
-              {...register("cardName", { required: "input card name"})}
+              {...register("cardName", { required: ""})}
             />
           </h1>
           <p>
@@ -87,7 +87,7 @@ function AddCard(props) {
               variant="outlined" 
               error={Boolean(errors.cardText?.message)}
               helperText={errors.cardText?.message}
-              {...register("cardText", { required: "input card text"})}
+              {...register("cardText", { required: "sdfgseg"})}
             />
           </p>
           <>          
@@ -95,20 +95,19 @@ function AddCard(props) {
                 return(
 
             <>
-              <Grid container key={index} spacing={0} className={styles.ingredient}>
-                  <Grid xs={7}>
-                    <TextField {...register(`inputName-${index}`)} label={props.label} variant="outlined" type="text" />
+              <Grid container key={index} spacing={1} className={styles.ingredient}>
+                  <Grid xs={6}>
+                    <TextField {...register(`inputName-${index}`)} label="name" variant="outlined" type="text" />
                   </Grid>
                   <Grid xs={3}>
-                    <TextField {...register(`inputAmount-${index}`)} label="amout" variant="outlined" type="number" />
+                    <TextField {...register(`inputAmount-${index}`)} label="amount" variant="outlined" type="number" />
                   </Grid>
-                  
-                    <Grid item xs={2} 
-                      
-                    > 
+                  <Grid item xs={3}> 
+                    <div className={styles.buttonContainer}>
                       <Button variant="contained">
                         <ClearIcon />
-                      </Button> 
+                      </Button>
+                    </div>
                   </Grid>
                 </Grid>
             </>  

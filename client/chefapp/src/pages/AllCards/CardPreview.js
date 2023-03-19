@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import axios from '../../axios.js';
 import { useDispatch } from 'react-redux';
 import { fetchRemoveCard } from '../../redux/slices/cards.js';
-
+import { Link as RouterLink } from "react-router-dom";
 
 export const CardPreview = (props) => {
     
@@ -32,7 +32,7 @@ return (
                 </Typography>
             </CardContent>
             <CardActions> 
-                <Link href={`/oneCard/${props.link}`} >
+                <Link component={RouterLink} to={`/oneCard/${props.link}`} >
                     Відкрити картку
                 </Link>
                 <Button onClick={deleteCard}>

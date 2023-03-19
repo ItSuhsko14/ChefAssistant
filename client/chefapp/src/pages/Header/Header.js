@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { selectIsAuth } from '../../redux/slices/auth.js';
+import { NavLink } from "react-router-dom";
 
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -16,21 +17,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Link from '@mui/material/Link';
+import { Outlet, Link as RouterLink} from "react-router-dom";
 
 
 export const mainMenu = [
-							{
-								text:'One card',
-							 	link: 'card'
-							},
-							{
-								text:'New card',
-							 	link: 'addCard'
-							},
-							{
-								text:'Save',
-								link:'Save'
-							},
 							{
 								text:'All cards',
 								link:'getAll'
@@ -71,8 +61,7 @@ const isAuth = useSelector(selectIsAuth);
 	        {mainMenu.map((item, index) => (
 	          <ListItem key={item.text} disablePadding>
 	            <ListItemButton>
-	            	<Link href={item.link}>  
-	              		<ListItemText primary={item.text} />
+	            	<Link component={NavLink} to={item.link}>	            		<ListItemText primary={item.text} />
 	              	</Link>
 	            </ListItemButton>
 	          </ListItem>
