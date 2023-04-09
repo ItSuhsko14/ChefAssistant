@@ -17,7 +17,8 @@ export const CardPreview = (props) => {
     const cardId = props.cardId;
     
     const deleteCard = async () => {
-    dispatch(fetchRemoveCard(props.cardId));
+    dispatch(fetchRemoveCard(cardId));
+    console.log(props.cardId)
     }
 
 return (
@@ -32,7 +33,7 @@ return (
                 </Typography>
             </CardContent>
             <CardActions> 
-                <Link component={RouterLink} to={`/oneCard/${props.link}`} >
+                <Link component={RouterLink} to={`/Card/${props.link}`} >
                     Відкрити картку
                 </Link>
                 <Button onClick={deleteCard}>

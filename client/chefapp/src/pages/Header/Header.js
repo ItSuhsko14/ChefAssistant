@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { selectIsAuth } from '../../redux/slices/auth.js';
-import { NavLink } from "react-router-dom";
 
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -17,7 +16,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Link from '@mui/material/Link';
-import { Outlet, Link as RouterLink} from "react-router-dom";
+import { Outlet, Link as RouterLink, NavLink } from "react-router-dom";
 
 
 export const mainMenu = [

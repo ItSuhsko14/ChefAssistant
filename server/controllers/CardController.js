@@ -60,7 +60,7 @@ export const remove = async (req, res) => {
 	try {
 		const cardId = req.params.id;
 		console.log(cardId);
-
+		console.log('function remove on server')
 		const result = await CardModel.findOneAndDelete(
 		{
 			_id: cardId,
@@ -68,7 +68,7 @@ export const remove = async (req, res) => {
 		
 		return res.json({
 				message: "card was delete"
-		})
+			})
 		
 
 		console.log("result");
@@ -87,19 +87,22 @@ export const update = async (req, res) => {
 		const cardId = req.params.id;
 
 		const result = await CardModel.updateOne(
-		{
-			_id: cardId
-		},
-		{
-			title: req.body.title,
-			text: req.body.text,
-			user: req.userId,
-			data: req.body.ingredients,
-		}
+			{
+				_id: cardId
+			},
+			{
+				title: req.body.title,
+				text: req.body.text,
+				user: req.userId,
+			}
 		)
 
 		console.log('result');
 		console.log(result);
+
+		return res.json({
+			message: "card updated"
+		})
 	} catch(err) {
 		console.log("err");
 		console.log(err);

@@ -9,7 +9,6 @@ function OneCard() {
   const [isLoading, setIsLoading] = useState(false);
   const [card, setCard] = useState([]);
   const { id } = useParams();
-  console.log(id);
 
   const baseUrl = `http://localhost:5000/cards/${id}`;
   

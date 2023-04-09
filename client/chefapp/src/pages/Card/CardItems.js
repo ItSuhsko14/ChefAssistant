@@ -1,6 +1,7 @@
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import ClearIcon from '@mui/icons-material/Clear';
+import SaveIcon from '@mui/icons-material/Save';
 import styles from './card.module.css';
 import Grid from '@mui/material/Unstable_Grid2';
 import Container from '@mui/material/Container';
@@ -21,25 +22,27 @@ export const Ingredient = (props) => {
 		)
 }
 
+
 export const IngredientInput = (props) => {
+	const register = props.register;
+	const removeItem = props.removeItem;
 	return (
 		<>
-			<Grid container spacing={0} className={styles.ingredient}>
-			    <Grid xs={7}>
-			    	<TextField label={props.label} variant="outlined" type="text" />
-			    </Grid>
-			    <Grid xs={3}>
-			    	<TextField label={props.label} variant="outlined" type="number" />
-			    </Grid>
-			    
-	        	<Grid item xs={2} 
-	        		
-	        	>	
-		        	<Button variant="contained">
-			          <ClearIcon />
-			        </Button>	
-			    </Grid>
-		    </Grid>
+			<Grid container key={props.index} spacing={1} className={styles.ingredient} >
+                <Grid xs={6}>
+            		<TextField {...register(`items.${props.index}.name`)}  variant="outlined" type="text" />
+                </Grid>
+                <Grid xs={3}>
+                	<TextField {...register(`items.${props.index}.quantity`)} variant="outlined" type="number" />
+                </Grid>
+                <Grid item xs={3}> 
+                    <div className={styles.buttonContainer}>
+                    	<Button onClick={props.removeItem} variant="contained">
+                        	<ClearIcon />
+                    	</Button>
+                    </div>
+                </Grid>
+            </Grid>
 		</>
 		)
 }
@@ -54,6 +57,7 @@ export const AddIngredient = (props) => {
 			          sx={{mr:0}}
 			          className={styles.fullWidth}
 			          onClick={props.click}
+					  type="button"
 			        >
 			          <AddIcon />
 			        </Button>
@@ -63,6 +67,25 @@ export const AddIngredient = (props) => {
 	)
 }
 
+export const SaveButton = (props) => {
+	return (
+		<>
+			<Container className={styles.addIngredient}>
+			    
+					<Button 
+			          variant="contained"
+			          sx={{mr:0}}
+			          className={styles.fullWidth}
+			          onClick={props.click}
+					  type="submit"
+			        >
+			          Save <SaveIcon />
+			        </Button>
+			    
+		    </Container>
+		</>
+	)
+}
 
 
 export const Amount = (props) => {

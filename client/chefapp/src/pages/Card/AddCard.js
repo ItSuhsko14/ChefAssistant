@@ -1,134 +1,141 @@
-import React, { useState } from 'react';
-import { IngredientInput, AddIngredient } from './CardItems.js';
+import React, { useState, useEffect } from 'react';
+import { IngredientInput, AddIngredient, SaveButton } from './CardItems.js';
 import styles from './card.module.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import SaveIcon from '@mui/icons-material/Save';
 import TextField from '@mui/material/TextField';
-import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
-import axios from '../../axios.js'
-import Grid from '@mui/material/Unstable_Grid2';
-import Container from '@mui/material/Container';
-import ClearIcon from '@mui/icons-material/Clear';
-
-
-
+import { useForm, useFieldArray, Controller } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from '../../axios.js';
+import { useParams, useNavigate } from 'react-router-dom';
+import { fetchCards } from '../../redux/slices/cards.js';
 
 function AddCard(props) {
-  const [listItems, setListItems] = useState(['']);
-  
-  
-  function addNewField() {
-    setListItems([...listItems, ''])
-    console.log(listItems);
-    console.log('function addNewField run');
-  }
+  const { id } = useParams();
+  const isEditing = Boolean(id);
+  const { cards } = useSelector(state => state.cards);
+  const isCardsLoaded = cards.status === 'loaded';
 
   const dispatch = useDispatch(); 
-  const { register, 
-          handleSubmit,
-          setError, 
+  const navigate = useNavigate();
+  
+  let currentCard;
+
+  // Register react-hook-form
+  const { register, control, handleSubmit, setValue, getValues,
           formState: { errors, isValid }
   } = useForm({
     defaultValues: {
-      cardName: 'input name',
-      cardText: 'input description'
-    },
+    cardName: 'card name',
+    cardText: 'card text',
+    items: []
+  },
     mode: 'onChange'
   })
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'items',
+  })
+
   
+    
+    useEffect( () => {
+      if (id) {
+      currentCard = cards.items.filter( (item) => item._id == id)[0];
+      setValue('cardName', currentCard.title);
+      setValue('cardText', currentCard.text);
+      setValue('items', currentCard.items)
+      console.log(currentCard.title)
+    }
+  }, [])
+  
+  
+  const onChange = (e) => {
+      setValue('cardName', currentCard.title);
+      let titleValue = getValues('cardName')
+      console.log(titleValue)
+      console.log('titleValue')
+    }
+
+  // handle Submit and send data to server
   const onSubmit = async (values) => {
     console.log(values);
+    
     const params = {
       title: values.cardName,
       text: values.cardText,
-      items: [],
-      }
-      let itemKeys = Object.keys(values).slice(2);
-      for (let i=0; i<itemKeys.length; i=i+2) {
-        console.log(values[itemKeys[i]]);
-        params.items.push({name: values[itemKeys[i]], quantity: values[itemKeys[i+1]]});
-      }
-        
-        console.log(itemKeys);
+      items: values.items,
+        }
         console.log(params);
-    
+
     try {
-      const data = await axios.post('/cards', params)
-      console.log(data);
+      const { data } = isEditing 
+        ? await axios.patch(`/cards/${id}`, params)
+        : await axios.post('/cards', params);
+
+      console.log(data._id);
+      const navigatePath = !isEditing ? `/card/${id}` : `/getAll`
+      navigate(navigatePath);
     } catch (err) {
       console.log("card dont create");
       console.warn(err)
-    } 
+    }
   }
 
   return (
     <>
       <Box className={styles.container}>
-        
-      <form onSubmit={handleSubmit(onSubmit)}>  
-        <Box className={styles.ingredientContainer}>
-          <h1 className={styles.header}>
-            <TextField 
-              className={styles.cardNameInput} 
-              label="Card name" 
-              variant="outlined" 
-              error={Boolean(errors.cardName?.message)}
-              helperText={errors.cardName?.message}
-              {...register("cardName", { required: ""})}
-            />
-          </h1>
-          <p>
-            <TextField 
-              className={styles.cardNameInput} 
-              label="Card text" 
-              variant="outlined" 
-              error={Boolean(errors.cardText?.message)}
-              helperText={errors.cardText?.message}
-              {...register("cardText", { required: "sdfgseg"})}
-            />
-          </p>
-          <>          
-              {listItems.map((item, index) => {
-                return(
-
-            <>
-              <Grid container key={index} spacing={1} className={styles.ingredient}>
-                  <Grid xs={6}>
-                    <TextField {...register(`inputName-${index}`)} label="name" variant="outlined" type="text" />
-                  </Grid>
-                  <Grid xs={3}>
-                    <TextField {...register(`inputAmount-${index}`)} label="amount" variant="outlined" type="number" />
-                  </Grid>
-                  <Grid item xs={3}> 
-                    <div className={styles.buttonContainer}>
-                      <Button variant="contained">
-                        <ClearIcon />
-                      </Button>
-                    </div>
-                  </Grid>
-                </Grid>
-            </>  
+        <form onSubmit={handleSubmit(onSubmit)}>  
+          <Box className={styles.ingredientContainer}>
+            <h1 className={styles.header}>
+              <TextField 
+                onClick={onChange}
+                className={styles.cardNameInput} 
+                label="Card name" 
+                variant="outlined" 
+                error={Boolean(errors.cardName?.message)}
+                helperText={errors.cardName?.message}
+                {...register("cardName", { required: ""})}
+              />
+            </h1>
+            <p>
+              <TextField 
+                className={styles.cardNameInput} 
+                label="Card text" 
+                variant="outlined" 
+                error={Boolean(errors.cardText?.message)}
+                helperText={errors.cardText?.message}
+                {...register("cardText", { required: "sdfgseg"})}
+              />
+            </p>
+            <p>
+              
+                {fields.map((item, index) => (
+                  <p key={item.id}>
+                    <IngredientInput 
+                      register={register}
+                      removeItem={ () => {remove(index)}}
+                      index={index}
+                    />
+                    {/* <input {...register(`items.${index}.name`)} />
+                    <input {...register(`items.${index}.amount`)} />
+                    <button type="button" onClick={ () => {remove(index)}}> x </button> */}
+                  </p>
+                ))}
+              <AddIngredient 
+                click={() => append({ name: "", quantity: 0 })}
+              />
+              <SaveButton variant="contained" type="submit" /> 
                 
-                )
-              })}
-          </>
-
-          <AddIngredient click={addNewField} />
+            </p>
+            <p>
             
-        </ Box>
+            </p>
 
-          <Button variant="contained" type="submit"> 
-            Save
-            <SaveIcon />
-          </Button>          
-        
-      </form>
-
+          </ Box>
+        </form>
       </Box>
-      
     </>
   );
 }
