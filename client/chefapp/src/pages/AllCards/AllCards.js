@@ -1,21 +1,33 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
+
 import { CardPreview } from './CardPreview.js';
 import { fetchCards } from '../../redux/slices/cards.js';
-import axios from '../../axios.js';
 
 function GaetAll() {
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   
+  let twoNumbers = (arr, sum) => {
+    console.log(arr, sum)
+    for (let i=0; i<arr.length; i++) {
+      for (let j=i+1; j<arr.length; j++) {
+        if ( arr[i] + arr[j] === sum ) {
+          let result = [arr[i], arr[j]]
+          return result;
+        }
+      }
+    }
+    return [];
+  }
 
-  const baseUrl = 'http://localhost:5000/cards/';
-  
+  console.log(twoNumbers([1, 2, 3, 4, 5, 6, 7, -3], -2));
+  console.log(twoNumbers([1, 2, 3, 4, 5, 6, 7], 10));
+  console.log(twoNumbers([1, 2, 3, 4, 5, 6, 7], -2));
+
+
   const dispatch = useDispatch();
   const { cards } = useSelector(state => state.cards);
   console.log(cards);
@@ -37,7 +49,8 @@ function GaetAll() {
           <CircularProgress />
       </Box>
     )}
-        
+    
+
       return (
         <>
           <Container>
