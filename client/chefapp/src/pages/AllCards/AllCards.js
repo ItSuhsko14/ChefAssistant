@@ -10,22 +10,18 @@ import { fetchCards } from '../../redux/slices/cards.js';
 
 function GaetAll() {
   
-  let twoNumbers = (arr, sum) => {
-    console.log(arr, sum)
-    for (let i=0; i<arr.length; i++) {
-      for (let j=i+1; j<arr.length; j++) {
-        if ( arr[i] + arr[j] === sum ) {
-          let result = [arr[i], arr[j]]
-          return result;
-        }
-      }
+  let deleteDuble = (string) => {
+    let result=[];
+    let index;
+    for (let i=0; i < string.length; i++) {
+      result.includes(string[i]) 
+        ? result = result
+        : result.push(string[i])
     }
-    return [];
+    return result;
   }
 
-  console.log(twoNumbers([1, 2, 3, 4, 5, 6, 7, -3], -2));
-  console.log(twoNumbers([1, 2, 3, 4, 5, 6, 7], 10));
-  console.log(twoNumbers([1, 2, 3, 4, 5, 6, 7], -2));
+  console.log(deleteDuble('abbddccee'));
 
 
   const dispatch = useDispatch();
