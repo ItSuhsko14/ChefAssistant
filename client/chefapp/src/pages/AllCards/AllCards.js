@@ -10,18 +10,28 @@ import { fetchCards } from '../../redux/slices/cards.js';
 
 function GaetAll() {
   
-  let deleteDuble = (string) => {
-    let result=[];
-    let index;
-    for (let i=0; i < string.length; i++) {
-      result.includes(string[i]) 
-        ? result = result
-        : result.push(string[i])
+  let commonWord = (arr) => {
+    let result = '';
+    let number=0;
+    let resArr = {};
+    arr.forEach( (cur) => {
+      if (cur in resArr) {
+        resArr[cur]++;
+      } else {
+        resArr[cur]=1;
+      }
+      
+    })
+    for (let key in resArr) {
+      if (resArr[key]>number) {
+        number = resArr[key];
+        result = key;
+      }
     }
     return result;
   }
 
-  console.log(deleteDuble('abbddccee'));
+  console.log(commonWord(['aaa', 'bbb', 'bbb', 'aaa', 'ccc', 'aaa', 'bbb', 'bbb']));
 
 
   const dispatch = useDispatch();
