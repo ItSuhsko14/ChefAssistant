@@ -10,28 +10,23 @@ import { fetchCards } from '../../redux/slices/cards.js';
 
 function GaetAll() {
   
-  let commonWord = (arr) => {
-    let result = '';
-    let number=0;
-    let resArr = {};
-    arr.forEach( (cur) => {
-      if (cur in resArr) {
-        resArr[cur]++;
-      } else {
-        resArr[cur]=1;
-      }
-      
-    })
-    for (let key in resArr) {
-      if (resArr[key]>number) {
-        number = resArr[key];
-        result = key;
+  let reverseWord = (str1, str2) => {
+    let result = false;
+    let test = '';
+    if (str1.length === str2.length) {
+      for (let i=0; i<str1.length; i++) {
+        test = str2.slice(i, str2.length) + str2.slice(0, i)
+        console.log(test)
+        if (str1 === test) {
+          return true
+        }
       }
     }
+    
     return result;
   }
 
-  console.log(commonWord(['aaa', 'bbb', 'bbb', 'aaa', 'ccc', 'aaa', 'bbb', 'bbb']));
+  console.log(reverseWord('javascript', 'scriptjava'));
 
 
   const dispatch = useDispatch();
