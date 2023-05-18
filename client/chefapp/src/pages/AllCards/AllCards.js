@@ -10,19 +10,11 @@ import { fetchCards } from '../../redux/slices/cards.js';
 
 function GaetAll() {
   
-  let deleteDuble = (string) => {
-    let result=[];
-    let index;
-    for (let i=0; i < string.length; i++) {
-      result.includes(string[i]) 
-        ? result = result
-        : result.push(string[i])
-    }
-    return result;
+  function calculateDaysBetweenDates(begin, end) {
+    
   }
 
-  console.log(deleteDuble('abbddccee'));
-
+  
 
   const dispatch = useDispatch();
   const { cards } = useSelector(state => state.cards);
