@@ -48,6 +48,7 @@ export default function Login () {
 
     if (!data.payload) {
       return alert('cant authorize')
+      console.log('cant autorize');
     }
     if ('token' in data.payload) {
       window.localStorage.setItem('token', data.payload.token)

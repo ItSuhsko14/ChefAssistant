@@ -37,11 +37,9 @@ function AddCard(props) {
     control,
     name: 'items',
   })
-
   
-    
     useEffect( () => {
-      if (id) {
+      if (isEditing) {
       currentCard = cards.items.filter( (item) => item._id == id)[0];
       setValue('cardName', currentCard.title);
       setValue('cardText', currentCard.text);
@@ -49,9 +47,9 @@ function AddCard(props) {
       console.log(currentCard.title)
     }
   }, [])
-  
-  
+    
   const onChange = (e) => {
+      console.log(currentCard)
       setValue('cardName', currentCard.title);
       let titleValue = getValues('cardName')
       console.log(titleValue)
@@ -61,21 +59,25 @@ function AddCard(props) {
   // handle Submit and send data to server
   const onSubmit = async (values) => {
     console.log(values);
-    
     const params = {
       title: values.cardName,
       text: values.cardText,
       items: values.items,
         }
-        console.log(params);
 
     try {
       const { data } = isEditing 
         ? await axios.patch(`/cards/${id}`, params)
         : await axios.post('/cards', params);
 
+      if (!isEditing) {
+          dispatch(fetchCards());
+        }
+
       console.log(data._id);
-      const navigatePath = !isEditing ? `/card/${id}` : `/getAll`
+      const navigatePath = isEditing 
+        ? `/card/${id}`
+        : `/card/${data._id}`;
       navigate(navigatePath);
     } catch (err) {
       console.log("card dont create");
@@ -110,7 +112,6 @@ function AddCard(props) {
               />
             </p>
             <p>
-              
                 {fields.map((item, index) => (
                   <p key={item.id}>
                     <IngredientInput 
@@ -126,13 +127,8 @@ function AddCard(props) {
               <AddIngredient 
                 click={() => append({ name: "", quantity: 0 })}
               />
-              <SaveButton variant="contained" type="submit" /> 
-                
+              <SaveButton variant="contained" type="submit" onClick={onSubmit}/> 
             </p>
-            <p>
-            
-            </p>
-
           </ Box>
         </form>
       </Box>

@@ -6,38 +6,42 @@ import Registration from '../pages/Registration/Registration.js'
 import Navbar from '../pages/Navbar/Navbar.js'
 import Card from '../pages/Card/Card.js';
 import AddCard from '../pages/Card/AddCard.js';
-import OneCard from '../pages/OneCard/OneCard.js';
-import EditCard from '../pages/Card/EditCard.js';
-import { Training } from '../pages/training/training.js';
-import { Home } from '../pages/Home/home';
 import Root from './root.jsx'
-import Todo from '../pages/todo/Todo.js';
+import { DynamicCardBreadcrumb } from '../router/DynamicCardBreadcrumb.js'
+
 
 export const router = createBrowserRouter([
       {
         path: "/",
+        basename: "/ChefAssistant",
         element: <Root />,
+        exact: true,
         errorElement: <ErrorPage />,
+        breadcrumb: "Home",
         children: [
           {
-            path: "/",
+            path: "ChefAssistant/",
             element: <AllCards />,
-            errorElement: <ErrorPage />
+            errorElement: <ErrorPage />,
+            breadcrumb: "All cards"
           },
           {
             path: "login",
             element: <Login />,
-            errorElement: <ErrorPage />
+            errorElement: <ErrorPage />,
+            breadcrumb: "Login"
           },
           {
             path: "/getAll",
             element: <AllCards />,
-            errorElement: <ErrorPage />
+            errorElement: <ErrorPage />,
+            breadcrumb: "All cards"
           },
           {
             path: "/registration",
             element: <Registration />,
-            errorElement: <ErrorPage />
+            errorElement: <ErrorPage />,
+            breadcrumb: "Registration"
           },
           {
             path: "navbar",
@@ -47,33 +51,22 @@ export const router = createBrowserRouter([
           {
             path: "/Card/:id",
             element: <Card />,
-            errorElement: <ErrorPage />
-          },
-          {
-            path: "/onecard/:id",
-            element: <OneCard />,
-            errorElement: <ErrorPage />
-          },
-          {
-            path: "training",
-            element: <Training />,
-            errorElement: <ErrorPage />
+            errorElement: <ErrorPage />,
+            breadcrumb: DynamicCardBreadcrumb
           },
           {
             path: "addCard",
             element: <AddCard />,
-            errorElement: <ErrorPage />
+            errorElement: <ErrorPage />,
+            breadcrumb: "Add card"
           },
           {
             path: "/addCard/:id/",
             element: <AddCard />,
             errorElement: <ErrorPage />
           },
-          {
-            path: "/todo",
-            element: <Todo />,
-            errorElement: <ErrorPage />
-          },
         ]
       }
   ])
+
+  console.log(router.routes);

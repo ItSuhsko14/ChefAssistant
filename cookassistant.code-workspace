@@ -4,10 +4,13 @@
 			"path": "."
 		},
 		{
-			"path": "../mern-frontend"
+			"path": "../cookAssistantApi"
 		},
 		{
-			"path": "../cookAssistantApi"
+			"path": "../mern-frontend"
 		}
-	]
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "cookassistant"
+	}
 }

@@ -17,7 +17,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Link from '@mui/material/Link';
 import { Outlet, Link as RouterLink, NavLink } from "react-router-dom";
-
+import AddIcon from '@mui/icons-material/Add';
+import MyBreadcrumbs from './MyBreadcrumbs.js';
 
 export const mainMenu = [
 							{
@@ -60,7 +61,8 @@ const isAuth = useSelector(selectIsAuth);
 	        {mainMenu.map((item, index) => (
 	          <ListItem key={item.text} disablePadding>
 	            <ListItemButton>
-	            	<Link component={NavLink} to={item.link}>	            		<ListItemText primary={item.text} />
+	            	<Link component={NavLink} to={item.link}>	            		
+						<ListItemText primary={item.text} />
 	              	</Link>
 	            </ListItemButton>
 	          </ListItem>
@@ -97,15 +99,24 @@ const isAuth = useSelector(selectIsAuth);
 						</Drawer>
 				    </div>
 					
+					
 					<Typography 
 						variant="h6" 
 						component="div"
 						sx={{ flexGrow: 1 }}
 					>
-						Cook assistant 
+						Chef assistant
 					</Typography>
 
-					<Box >
+					<Typography 
+						variant="h6" 
+						component="div"
+						sx={{ flexGrow: 1 }}
+					>
+						<AddIcon />
+					</Typography>
+
+					<Box>
 						{isAuth 
 							? <LogOutButton />
 							: <LogInButton />
@@ -113,6 +124,7 @@ const isAuth = useSelector(selectIsAuth);
 					</Box>
 				</Toolbar>
 			</AppBar>
+			<MyBreadcrumbs />
 		</Box>
 	)
 }
