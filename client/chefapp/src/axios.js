@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const instance = axios.create({
-	baseURL: 'https://coockassistantapi.onrender.com/'
+	baseURL: 'http://localhost:5000/'
+	// baseURL: 'https://coockassistantapi.onrender.com/'
 })
 
 instance.interceptors.request.use( (config) => {

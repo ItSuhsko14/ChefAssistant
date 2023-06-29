@@ -23,7 +23,7 @@ import MyBreadcrumbs from './MyBreadcrumbs.js';
 export const mainMenu = [
 							{
 								text:'All cards',
-								link:'getAll'
+								link:'/'
 							},
 							{
 								text:'Create new card',

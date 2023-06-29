@@ -50,7 +50,7 @@ export const create = async (req, res) => {
 	} catch (err) {
 		console.log(err);
 		res.status(500).json({
-			message: "Can't create card"
+			message: "Card controller: 	Can't create card"
 		})
 
 	}

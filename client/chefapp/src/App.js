@@ -21,9 +21,7 @@ function App() {
           <RouterProvider router={router} />
         
       </Container>   
-    </>
-        
-    
+    </> 
     )
   }
 

@@ -64,6 +64,8 @@ function AddCard(props) {
       text: values.cardText,
       items: values.items,
         }
+    console.log(params);
+    console.log(id)
 
     try {
       const { data } = isEditing 
@@ -74,13 +76,13 @@ function AddCard(props) {
           dispatch(fetchCards());
         }
 
-      console.log(data._id);
+      console.log(data);
       const navigatePath = isEditing 
         ? `/card/${id}`
         : `/card/${data._id}`;
       navigate(navigatePath);
     } catch (err) {
-      console.log("card dont create");
+      console.log("Add card: card dont create");
       console.warn(err)
     }
   }

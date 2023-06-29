@@ -20,6 +20,7 @@ export default function MyBreadcrumbs() {
   const breadcrumbs = useBreadcrumbs(router.routes, { excludePaths: ["/Card/:id"] });
   let match = useMatches();
   console.log(match);
+  console.log(breadcrumbs)
 
   return (
    
@@ -30,12 +31,24 @@ export default function MyBreadcrumbs() {
       <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">  
         {breadcrumbs.map(({ match, breadcrumb }, index) => (
           <>
-            <NavLink key={match.pathname} to={match.pathname} underline="hover">
+            <NavLink key={match.pathname} to={match.pathname} >
               
               { breadcrumb.key === '/Card' ? (
-              <DynamicCardBreadcrumb match={match}/> 
+                <Link
+                  underline="hover"
+                  sx={{ display: 'flex', alignItems: 'center' }}
+                  color="inherit"
+                >
+                  <DynamicCardBreadcrumb match={match}/> 
+                </Link>
               ) : (
-              breadcrumb 
+                <Link
+                  underline="hover"
+                  sx={{ display: 'flex', alignItems: 'center' }}
+                  color="inherit"
+                >
+                  {breadcrumb}
+                </Link>
               )}
               
             </NavLink>

@@ -13,7 +13,7 @@ function GaetAll() {
   console.log(cards);
   const isCardsLoading = cards.status === 'loading';
   console.log(isCardsLoading);
-  console.log(cards.items)
+  console.log(cards)
 
   React.useEffect(() => {
     dispatch(fetchCards())
