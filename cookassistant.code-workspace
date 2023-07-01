@@ -1,16 +1,10 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../cookAssistantApi"
-		},
-		{
-			"path": "../mern-frontend"
-		}
-	],
-	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "cookassistant"
-	}
+    "folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "../cookAssistantApi"
+        }
+    ]
 }

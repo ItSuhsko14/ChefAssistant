@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import AllCards from '../pages/AllCards/AllCards.js'
-import Login from '../pages/Login/Login.js'
+import Login from '../pages/Login/login.js'
 import ErrorPage from '../pages/Error/ErrorPage.js'
 import Registration from '../pages/Registration/Registration.js'
 import Navbar from '../pages/Navbar/Navbar.js'
