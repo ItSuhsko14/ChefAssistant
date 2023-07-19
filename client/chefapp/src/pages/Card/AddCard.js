@@ -14,13 +14,12 @@ function AddCard(props) {
   const { id } = useParams();
   const isEditing = Boolean(id);
   const { cards } = useSelector(state => state.cards);
+  console.log(cards)
   const isCardsLoaded = cards.status === 'loaded';
 
   const dispatch = useDispatch(); 
   const navigate = useNavigate();
   
-  let currentCard;
-
   // Register react-hook-form
   const { register, control, handleSubmit, setValue, getValues,
           formState: { errors, isValid }
@@ -44,7 +43,7 @@ function AddCard(props) {
       setValue('cardName', currentCard.title);
       setValue('cardText', currentCard.text);
       setValue('items', currentCard.items)
-      console.log(currentCard.title)
+      console.log(currentCard)
     }
   }, [])
     
