@@ -16,11 +16,7 @@ export const router = createBrowserRouter([
         basename: "/ChefAssistant",
         element: <Root />,
         children: [
-          {
-            path: '/',
-            element: <Outlet />,
-            breadcrumb: 'Home',
-            children: [
+          
             {
               path: "/",
               element: <AllCards />,
@@ -75,8 +71,7 @@ export const router = createBrowserRouter([
               breadcrumb: "Edit card",
             },
           ],
-        },  
-      ],
+        
     },
   ])
 

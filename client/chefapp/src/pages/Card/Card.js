@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Ingredient, AddIngredient } from './CardItems.js';
+import { Ingredient } from './CardItems.js';
 import styles from './card.module.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import EditIcon from '@mui/icons-material/Edit';
+
 import ClearIcon from '@mui/icons-material/Clear';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchRemoveCard, fetchCards } from '../../redux/slices/cards.js';
 import { Link, useNavigate } from "react-router-dom";
 import {useParams} from 'react-router-dom';
 import axios from '../../axios.js';
 import Loading from '../../Components/Loading/Loading.js';
+
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 function MyCard(props) {
   const [currentCard, setCurrentCard] = useState();
@@ -44,7 +52,7 @@ function MyCard(props) {
   console.log(currentCard);
   const items = currentCard.items;
   
-  // console.log(items);
+  console.log(items);
   console.log(id);
   
   const deleteCard = async () => {
@@ -53,24 +61,46 @@ function MyCard(props) {
       navigate('/getAll')
     }
 
-
+  const total = () => {
+    const sum=0;
+    items.map( (item) => {
+      console.log(item.quantity)
+      sum = sum + item.quantity;
+    })
+    console.log(sum)
+    return sum;
+  }
 
   return (
     <>
       <Box className={styles.ingredientContainer}>
         <h1 className={styles.header}>{currentCard.title}</h1>
         <p>{currentCard.text}</p>
-        <p>
-          {items.map( (item)=> {
-            return (
-              <Ingredient 
-                name={item.name}
-                amount={item.quantity}
-              />
-            )
-          })}
-          
-        </p>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 300 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell sx={{ width: 50 }} align="right">Mass, g</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {items.map((item) => {
+                return (
+                  <Ingredient 
+                    name={item.name}
+                    amount={item.quantity}
+                  />
+                )
+                })}
+              <TableRow>
+                <TableCell align="right">Total</TableCell>
+                <TableCell align="right">{total()}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
+        
         
         <p>
           <Button variant="contained"> 

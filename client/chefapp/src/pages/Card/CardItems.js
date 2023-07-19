@@ -6,18 +6,24 @@ import styles from './card.module.css';
 import Grid from '@mui/material/Unstable_Grid2';
 import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 
 export const Ingredient = (props) => {
 	return (
 		<>
-			<Grid container spacing={0} className={styles.ingredient}>
-			    <Grid xs={9}>
-			    	<div className={styles.name}> {props.name} </div>
-			    </Grid>
-			    <Grid xs={3}>
-   		        	<div className={styles.amount} > {props.amount} </div>
-			    </Grid>
-		    </Grid>
+			
+			<TableRow
+				key={props.name}
+				sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+				<TableCell component="th" scope="row">
+					{props.name}
+				</TableCell>
+				<TableCell align="right">
+					{props.amount}
+				</TableCell>
+            </TableRow>
 		</>
 		)
 }
