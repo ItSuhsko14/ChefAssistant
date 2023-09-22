@@ -13,7 +13,7 @@ import { Outlet } from "react-router-dom";
 export const router = createBrowserRouter([
       {
         path: "/",
-        basename: "/",
+        basename: "/ChefAssistant",
         element: <Root />,
         children: [
           {
