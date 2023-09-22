@@ -80,6 +80,6 @@ export const router = createBrowserRouter([
         ],
       },
     ])
->>>>>>> reserve-branch
+
 
   console.log(router.routes);
